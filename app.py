@@ -8,7 +8,7 @@ from langchain_community.embeddings import FakeEmbeddings
 from langgraph.graph import StateGraph
 
 # -----------------------------
-# STEP 1: SCRAPE DATA
+# SCRAPE DATA
 # -----------------------------
 def scrape_website(url):
     try:
@@ -18,7 +18,7 @@ def scrape_website(url):
     except:
         return ""
 
-print("🔄 Scraping Debales AI data...")
+print("Scraping Debales AI data...")
 data = scrape_website("https://debales.ai")
 
 # fallback if scraping fails
@@ -26,20 +26,20 @@ if len(data) < 100:
     data = "Debales AI is a company focused on AI solutions, automation, and intelligent systems."
 
 # -----------------------------
-# STEP 2: SPLIT TEXT
+# SPLIT TEXT
 # -----------------------------
 splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 chunks = splitter.split_text(data)
 
 # -----------------------------
-# STEP 3: VECTOR STORE (NO API)
+# VECTOR STORE (NO API)
 # -----------------------------
-print("📦 Creating vector DB...")
+print("Creating vector DB...")
 embeddings = FakeEmbeddings(size=384)
 db = FAISS.from_texts(chunks, embeddings)
 
 # -----------------------------
-# STEP 4: RAG FUNCTION
+# RAG FUNCTION
 # -----------------------------
 def rag_answer(query):
     docs = db.similarity_search(query, k=2)
@@ -48,13 +48,13 @@ def rag_answer(query):
     return f"[RAG]\nAnswer based on Debales data:\n{context[:400]}"
 
 # -----------------------------
-# STEP 5: SERP FUNCTION
+# SERP FUNCTION
 # -----------------------------
 def serp_answer(query):
     return f"[SERP]\nThis is a general answer for: {query}"
 
 # -----------------------------
-# STEP 6: ROUTER FUNCTION
+# ROUTER FUNCTION
 # -----------------------------
 def decide(state):
     query = state["query"].lower()
@@ -65,7 +65,7 @@ def decide(state):
         return "serp"
 
 # -----------------------------
-# STEP 7: GRAPH (FIXED)
+# GRAPH (FIXED)
 # -----------------------------
 builder = StateGraph(dict)
 
@@ -90,7 +90,7 @@ builder.add_conditional_edges(
 graph = builder.compile()
 
 # -----------------------------
-# STEP 8: CHAT LOOP
+# CHAT LOOP
 # -----------------------------
 print("\n🤖 Chatbot Ready! Type 'exit' to quit.\n")
 
