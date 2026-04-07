@@ -92,7 +92,7 @@ graph = builder.compile()
 # -----------------------------
 # CHAT LOOP
 # -----------------------------
-print("\n🤖 Chatbot Ready! Type 'exit' to quit.\n")
+print("\n Chatbot Ready! Type 'exit' to quit.\n")
 
 while True:
     query = input("You: ")
