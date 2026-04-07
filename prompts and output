@@ -1,0 +1,14 @@
+🔄 Scraping Debales AI data...
+📦 Creating vector DB...
+
+🤖 Chatbot Ready! Type 'exit' to quit.
+
+You: What is Debales AI?
+
+[RAG]
+Answer based on Debales data: ...
+
+You: What is Python?
+
+[SERP]
+This is a general answer for: What is Python?
